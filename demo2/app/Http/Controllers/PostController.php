@@ -49,7 +49,6 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        dd('lol');
         // $post = Post::where()->limit()->orderBy()->paginate(2);
 
     }
@@ -67,7 +66,11 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $post->title = 'Titre édité !!!';
+        $post->content = 'Un autre contenu !';
+        $post->save();
     }
 
     /**
@@ -75,6 +78,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
     }
 }
