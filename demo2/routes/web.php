@@ -26,3 +26,5 @@ Route::prefix('/hello')->group(function() {
 
 Route::resource('/posts', PostController::class);
 Route::resource('/products', ProductController::class);
+Route::get('/products/search/{search}', [ProductController::class, 'search']);
+Route::get('/products/advanced-search/specific', [ProductController::class, 'specificSearch']);

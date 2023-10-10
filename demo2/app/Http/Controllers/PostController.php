@@ -13,7 +13,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all(['title', 'content']);
+
+        return $posts;
     }
 
     /**
@@ -47,7 +49,9 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        dd('lol');
+        // $post = Post::where()->limit()->orderBy()->paginate(2);
+
     }
 
     /**

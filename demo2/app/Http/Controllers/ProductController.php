@@ -13,7 +13,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+
+        return $products;
     }
 
     /**
@@ -29,9 +31,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $products = [];
-        for ($i = 1; $i <= 1000; $i++) {
-            array_push($products, [
+        for ($i = 1; $i <= 10; $i++) {
+            $product = new Product([
                 'sku' => Str::random(8),
                 'name' => "Article $i",
                 'description' => "Cet article $i de qualité supérieure vous offrira un confort exceptionnel lors de vos séances d'aquaponey 🦄",
@@ -39,9 +40,9 @@ class ProductController extends Controller
                 'rate' => rand(1, 5),
                 'stock' => rand(0, 100)
             ]);
-        }
 
-        Product::insert($products);
+            $product->save();
+        }
     }
 
     /**
@@ -74,5 +75,21 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(string $search) {
+        $products = Product::where('name', 'LIKE', "%$search%")
+            ->orWhere('description', 'LIKE', "%$search%")
+            ->get();
+
+        return $products;
+    }
+
+    public function specificSearch() {
+        $products = Product::where('rate', '>', 6)
+            ->orderBy('rate', 'DESC')
+            ->paginate(2);
+
+        return $products;
     }
 }
