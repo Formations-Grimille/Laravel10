@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestCreatePost;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -11,7 +12,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::with('comments')->get();
 
@@ -33,18 +34,9 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RequestCreatePost $request)
     {
-        // $post = new Post();
-        // $post->title = "Mon super titre d'article 3";
-        // $post->content = "Bla bla bla";
-        // $post->published_at = Carbon::now();
-
-        $post = new Post([
-            'title' => "Mon super titre d'article 5",
-            'content' => 'Blablabla2',
-            'published_at' => Carbon::now()
-        ]);
+        $post = new Post($request->all());
         $post->save();
 
         return $post;
@@ -58,7 +50,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $comments = $post->comments;
 
-        return "<p>$comments</p>";
+        return response("Ce contenu est interdit.", 403);
     }
 
     /**
@@ -66,7 +58,9 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        return view('blog.edit', [ 'post' => $post ]);
     }
 
     /**
@@ -79,6 +73,8 @@ class PostController extends Controller
         $post->title = 'Titre édité !!!';
         $post->content = 'Un autre contenu !';
         $post->save();
+
+        return redirect()->route('blog.index');
     }
 
     /**
