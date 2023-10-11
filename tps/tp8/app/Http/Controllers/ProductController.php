@@ -14,7 +14,6 @@ class ProductController extends Controller
 
         return $avg;
     }
-    
     /**
      * Display a listing of the resource.
      */

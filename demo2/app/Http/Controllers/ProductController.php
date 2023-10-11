@@ -50,7 +50,19 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $category = $product->productCategory;
+
+        $parentCategories = [];
+
+        while ($category) {
+            $parentCategories[] = $category->name;
+            $category = $category->parent;
+        }
+
+        return array_reverse($parentCategories);
+
+        // PC Gamer = PC Dell > Ordinateurs > Informatique // 10
     }
 
     /**

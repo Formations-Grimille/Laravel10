@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/hello')->group(function() {
     Route::prefix('/world')->group(function() {
-        Route::get('/', [HelloController::class, 'sayHello'])->name('hello.home');
+        Route::get('/', [HelloController::class, 'hello'])->name('hello.home');
         Route::get('/{firstname}', [HelloController::class, 'sayHelloName'])->name('hello.user')->where('firstname', '[A-Za-z]+');
     });
 });

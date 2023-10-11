@@ -13,9 +13,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all(['title', 'content']);
+        $posts = Post::with('comments')->get();
 
-        return $posts;
+        foreach ($posts as $post) {
+            $comments = $post->comments;
+        }
+
+        return "<pre>$posts</pre>";
     }
 
     /**
@@ -49,8 +53,10 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        // $post = Post::where()->limit()->orderBy()->paginate(2);
+        $post = Post::findOrFail($id);
+        $comments = $post->comments;
 
+        return "<p>$comments</p>";
     }
 
     /**
