@@ -8,7 +8,13 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    public function averageRate()
+    {
+        $avg = Product::all()->avg('rate');
 
+        return $avg;
+    }
+    
     /**
      * Display a listing of the resource.
      */
