@@ -19,7 +19,7 @@ class PostController extends Controller
             $comments = $post->comments;
         }
 
-        return "<pre>$posts</pre>";
+        return view('blog.index', [ 'posts' => $posts ]);
     }
 
     /**
@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog.create');
     }
 
     /**
@@ -41,11 +41,13 @@ class PostController extends Controller
         // $post->published_at = Carbon::now();
 
         $post = new Post([
-            'title' => "Mon super titre d'article 4",
-            'content' => 'Blablabla',
+            'title' => "Mon super titre d'article 5",
+            'content' => 'Blablabla2',
             'published_at' => Carbon::now()
         ]);
         $post->save();
+
+        return $post;
     }
 
     /**

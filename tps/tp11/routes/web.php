@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\HelloController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,12 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/', [HelloController::class, 'hello'])->name('hello.home');
-Route::get('/contact', [HelloController::class, 'contact'])->name('hello.contact');
-
-
-Route::resource('/posts', PostController::class);
 Route::resource('/products', ProductController::class);
-Route::get('/products/search/{search}', [ProductController::class, 'search']);
-Route::get('/products/advanced-search/specific', [ProductController::class, 'specificSearch']);
+Route::get('/products/advanced-search/specific', [ProductController::class, 'specificSearch'])->name('products.specific');
+Route::get('/products/search/{search}', [ProductController::class, 'search'])->name('products.search');
+Route::get('/products/bi/average', [ProductController::class, 'averageRate']);
